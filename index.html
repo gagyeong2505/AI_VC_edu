@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 바이브 코딩 사업부 교육자료</title>
+    <title>AI 바이브 코딩 영업 세일즈 대시보드</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -359,114 +359,141 @@
             accordionContainer.insertAdjacentHTML('beforeend', html);
         });
 
-        // --- 4. Chart.js Visualization (Formal Style) ---
+        // --- 3. Chart.js Visualization (Scroll Intersection Observer) ---
         document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('comparisonChart').getContext('2d');
-            
-            new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: [
-                        '서비스 완성 속도', 
-                        '학습 진입 장벽 (낮음)', 
-                        '포트폴리오 임팩트', 
-                        '최신 실무 트렌드', 
-                        '에러 대처 능력 (협업)'
-                    ],
-                    datasets: [
-                        {
-                            label: 'AI 바이브 코딩',
-                            data: [10, 9, 10, 10, 9],
-                            backgroundColor: 'rgba(37, 99, 235, 0.15)', // vibrant blue with opacity
-                            borderColor: '#2563eb', // vibrant blue
-                            pointBackgroundColor: '#2563eb',
-                            pointBorderColor: '#ffffff',
-                            pointHoverBackgroundColor: '#ffffff',
-                            pointHoverBorderColor: '#2563eb',
-                            borderWidth: 2,
-                            fill: true
-                        },
-                        {
-                            label: '기존 웹 과정',
-                            data: [3, 4, 4, 3, 2],
-                            backgroundColor: 'transparent',
-                            borderColor: '#6b7280', // gray-500
-                            pointBackgroundColor: '#6b7280',
-                            pointBorderColor: '#ffffff',
-                            pointHoverBackgroundColor: '#ffffff',
-                            pointHoverBorderColor: '#6b7280',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    scales: {
-                        r: {
-                            angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
-                            grid: { color: 'rgba(0, 0, 0, 0.1)' },
-                            pointLabels: {
-                                font: {
-                                    family: "'Google Sans Flex', 'Pretendard Variable', Pretendard, sans-serif",
-                                    size: 13,
-                                    weight: 'bold'
-                                },
-                                color: '#374151' // gray-700
+            let chartInitialized = false;
+            let comparisonChart = null;
+
+            function initChart() {
+                const ctx = document.getElementById('comparisonChart').getContext('2d');
+                
+                comparisonChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: [
+                            '서비스 완성 속도', 
+                            '학습 진입 장벽 (낮음)', 
+                            '포트폴리오 임팩트', 
+                            '최신 실무 트렌드', 
+                            '에러 대처 능력 (협업)'
+                        ],
+                        datasets: [
+                            {
+                                label: 'AI 바이브 코딩',
+                                data: [10, 9, 10, 10, 9],
+                                backgroundColor: 'rgba(37, 99, 235, 0.15)', // vibrant blue with opacity
+                                borderColor: '#2563eb', // vibrant blue
+                                pointBackgroundColor: '#2563eb',
+                                pointBorderColor: '#ffffff',
+                                pointHoverBackgroundColor: '#ffffff',
+                                pointHoverBorderColor: '#2563eb',
+                                borderWidth: 2,
+                                fill: true
                             },
-                            ticks: {
-                                display: false,
-                                min: 0,
-                                max: 10
+                            {
+                                label: '기존 웹 과정',
+                                data: [3, 4, 4, 3, 2],
+                                backgroundColor: 'transparent',
+                                borderColor: '#6b7280', // gray-500
+                                pointBackgroundColor: '#6b7280',
+                                pointBorderColor: '#ffffff',
+                                pointHoverBackgroundColor: '#ffffff',
+                                pointHoverBorderColor: '#6b7280',
+                                borderWidth: 2,
+                                borderDash: [5, 5],
+                                fill: true
                             }
-                        }
+                        ]
                     },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                font: {
-                                    family: "'Google Sans Flex', 'Pretendard Variable', Pretendard, sans-serif",
-                                    size: 14,
-                                    weight: '500'
+                    options: {
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+                                grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                                pointLabels: {
+                                    font: {
+                                        family: "'Google Sans Flex', 'Pretendard Variable', Pretendard, sans-serif",
+                                        size: 13,
+                                        weight: 'bold'
+                                    },
+                                    color: '#374151' // gray-700
                                 },
-                                padding: 20,
-                                color: '#111827'
+                                ticks: {
+                                    display: false,
+                                    min: 0,
+                                    max: 10
+                                }
                             }
                         },
-                        tooltip: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            titleColor: '#111827',
-                            bodyColor: '#4b5563',
-                            borderColor: '#d1d5db',
-                            borderWidth: 1,
-                            titleFont: { family: "'Google Sans Flex', 'Pretendard Variable', Pretendard, sans-serif", size: 14, weight: 'bold' },
-                            bodyFont: { family: "'Google Sans Flex', 'Pretendard Variable', Pretendard, sans-serif", size: 13 },
-                            padding: 12,
-                            cornerRadius: 0, // strict square corners for tooltip
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ' : ';
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        family: "'Google Sans Flex', 'Pretendard Variable', Pretendard, sans-serif",
+                                        size: 14,
+                                        weight: '500'
+                                    },
+                                    padding: 20,
+                                    color: '#111827'
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                                titleColor: '#111827',
+                                bodyColor: '#4b5563',
+                                borderColor: '#d1d5db',
+                                borderWidth: 1,
+                                titleFont: { family: "'Google Sans Flex', 'Pretendard Variable', Pretendard, sans-serif", size: 14, weight: 'bold' },
+                                bodyFont: { family: "'Google Sans Flex', 'Pretendard Variable', Pretendard, sans-serif", size: 13 },
+                                padding: 12,
+                                cornerRadius: 0, // strict square corners for tooltip
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ' : ';
+                                        }
+                                        if (context.parsed.r !== null) {
+                                            let scoreText = '';
+                                            if(context.parsed.r >= 9) scoreText = '매우 우수';
+                                            else if (context.parsed.r >= 7) scoreText = '우수';
+                                            else if (context.parsed.r >= 4) scoreText = '보통';
+                                            else scoreText = '미흡';
+                                            label += scoreText;
+                                        }
+                                        return label;
                                     }
-                                    if (context.parsed.r !== null) {
-                                        let scoreText = '';
-                                        if(context.parsed.r >= 9) scoreText = '매우 우수';
-                                        else if (context.parsed.r >= 7) scoreText = '우수';
-                                        else if (context.parsed.r >= 4) scoreText = '보통';
-                                        else scoreText = '미흡';
-                                        label += scoreText;
-                                    }
-                                    return label;
                                 }
                             }
                         }
                     }
-                }
-            });
+                });
+            }
+
+            // Set up Intersection Observer to trigger chart initialization on scroll
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.2 // Trigger when 20% of the comparison section is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !chartInitialized) {
+                        initChart();
+                        chartInitialized = true;
+                        observer.unobserve(entry.target); // Stop observing once initialized
+                    }
+                });
+            }, observerOptions);
+
+            const comparisonSection = document.getElementById('comparison');
+            if (comparisonSection) {
+                observer.observe(comparisonSection);
+            }
         });
     </script>
 </body>
